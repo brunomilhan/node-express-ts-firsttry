@@ -3,15 +3,22 @@
  */
 /// <reference path="typings/index.d.ts" />
 import express = require('express');
+import User = require('./routes/User');
 
 class Express{
-    public app: express.Application;
+    private app: express.Application;
+
+    //Routes
+    private user: User = new User();
 
 
     constructor(){
         this.app = express();
         this.setMiddlewares();
         this.setEnvVars();
+        this.setViewEngine();
+        this.user.setApp(this.app);
+        this.setRoutes();
     }
 
     getApp(): express.Application {
@@ -22,8 +29,20 @@ class Express{
         this.app.set('port', 3000);
     }
 
+    private setViewEngine(){
+        // view engine setup
+        this.app.set('views', './views');
+        this.app.set('view engine', 'jade');
+    }
+
     private setMiddlewares(){
-        this.app.use(express.static('./public'));
+        //this.app.use(express.static('./public'));
+
+    }
+
+    private setRoutes(){
+
+        this.app.use(this.user.createRoute);
     }
 
 }
