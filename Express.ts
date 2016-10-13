@@ -7,21 +7,19 @@ import User = require('./routes/User');
 
 class Express{
     private app: express.Application;
-
     //Routes
-    private user: User = new User();
-
+    private user: User;
 
     constructor(){
         this.app = express();
-        this.setMiddlewares();
+        this.user = new User(this.app);
         this.setEnvVars();
         this.setViewEngine();
-        this.user.setApp(this.app);
-        this.setRoutes();
+        this.setMiddlewares();
     }
 
     getApp(): express.Application {
+        console.log('Express-getApp');
         return this.app;
     }
 
@@ -30,21 +28,13 @@ class Express{
     }
 
     private setViewEngine(){
-        // view engine setup
         this.app.set('views', './views');
         this.app.set('view engine', 'jade');
     }
 
     private setMiddlewares(){
         //this.app.use(express.static('./public'));
-
+        this.user.createRoute();
     }
-
-    private setRoutes(){
-
-        this.app.use(this.user.createRoute);
-    }
-
 }
-
 export = Express;

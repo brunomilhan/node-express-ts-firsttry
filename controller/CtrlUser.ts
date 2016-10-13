@@ -5,11 +5,8 @@ import express = require('express');
 
 class CtrlUser {
 
-
     public index(req: express.Request, res: express.Response) {
-        res.render('index');
+        res.render('index', {title: 'test'});
     }
-
 }
-
 export = CtrlUser;

@@ -10,7 +10,6 @@ class Server {
     express = new Express();
     app: express.Application;
 
-
     constructor(){
         this.app = this.express.getApp();
     }
@@ -18,8 +17,5 @@ class Server {
     public createServer(){
         http.createServer(this.app).listen(this.app.get('port'));
     }
-
 }
-
 export = Server;
-
